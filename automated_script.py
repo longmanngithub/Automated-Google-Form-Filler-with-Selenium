@@ -68,10 +68,10 @@ def submit_form(driver):
     amount = random.choice(spending_estimates[currency])
 
     # Wait for the currency option to load before clicking
-    WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, f"//div[@data-value='{currency}']")) # Wait for the currency option to be present
+    currency_radio = WebDriverWait(driver, 10).until( 
+        EC.element_to_be_clickable((By.XPATH, f"//div[@data-value='{currency}']")) # Wait for the currency radio button to be clickable
     )
-    driver.find_element(By.XPATH, f"//div[@data-value='{currency}']").click() # Click the currency option
+    driver.execute_script("arguments[0].click();", currency_radio) # Click the currency option using JavaScript to avoid click issues
 
     time.sleep(2)
 
